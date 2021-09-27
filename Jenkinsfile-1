@@ -1,26 +1,11 @@
 pipeline {
   agent {
-    docker {
-      image 'node:lts-buster-slim'
-      args '-p 8989:8989'
-    }
-  }
-  environment {
-    NODE_ENV = 'production'
+    docker { image 'liquibase/liquibase:4.4.3' }
   }
   stages {
-    stage('Install') {
+    stage('Test') {
       steps {
-        echo 'Installing..'
-        sh 'yarn'
-        echo 'Install Success'
-      }
-    }
-    stage('Build') {
-      steps {
-        echo 'Building..'
-        sh 'yarn build'
-        echo 'Build Success'
+        sh 'liquibase --version'
       }
     }
   }
